@@ -1,7 +1,24 @@
-﻿@{
-    ViewData["Title"] = "Index";
+﻿@model MatrixRotatorWebApplication.Models.Matrix<int>
+
+@{
+    ViewData["Title"] = "Matrix";
 }
 
 <h2>Matrix</h2>
 
-<p>Matrix</p>
+<table class="table">
+    <tbody>
+        @for (var i = 0; i < Model.Size; i++)
+        {
+            <tr>
+                @for (var j = 0; j < Model.Size; j++)
+                {
+                    var el = Model.Elements[i, j];
+                    <td>
+                        @Html.TextBoxFor(modelItem => el)
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
