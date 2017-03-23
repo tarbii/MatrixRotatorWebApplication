@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace MatrixRotatorWebApplication.Models
@@ -10,7 +7,16 @@ namespace MatrixRotatorWebApplication.Models
     {
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
-            bindingContext.Result = ModelBindingResult.Success(new int?[,] { { 45 } });
+            int size;
+            if (!int.TryParse(bindingContext.ValueProvider.GetValue("Size").FirstValue, out size))
+                return Task.CompletedTask;
+            var elements = new T[size, size];
+            for (var i = 0; i < size; i++)
+            for (var j = 0; j < size; j++)
+                elements[i, j] = BindingDeserializer.Deserialize<T>(
+                    bindingContext.ValueProvider.GetValue($"elements[{i}, {j}]").FirstValue);
+            var matrix = new Matrix<T>(size) {Elements = elements};
+            bindingContext.Result = ModelBindingResult.Success(matrix);
             return Task.CompletedTask;
         }
     }
