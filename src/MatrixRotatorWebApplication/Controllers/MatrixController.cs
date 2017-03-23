@@ -12,7 +12,7 @@ namespace MatrixRotatorWebApplication.Controllers
         public IActionResult Index()
         {
             var size = 7;
-            var elements = new[,]
+            var elements = new int?[,]
             {
                 {1, 2, 3, 4, 5, 6, 7},
                 {8, 9, 3, 2, 7, 2, 6},
@@ -22,7 +22,7 @@ namespace MatrixRotatorWebApplication.Controllers
                 {5, 1, 2, 3, 4, 7, 9},
                 {4, 1, 2, 8, 7, 6, 1}
             };
-            var matrix = new Matrix<int>(size) {Elements = elements};
+            var matrix = new Matrix<int?>(size) {Elements = elements};
             return View(matrix);
         }
     }
