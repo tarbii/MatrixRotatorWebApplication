@@ -13,19 +13,17 @@
         @Html.LabelFor(m => m.Size)
         @Html.TextBoxFor(m => m.Size)
         <tbody>
-        @for (var i = 0; i < Model.Size; i++)
-        {
-            <tr>
-                @for (var j = 0; j < Model.Size; j++)
-                {
-                    var element = Model.Elements[i, j];
-                    var htmlAttributes = new Dictionary<string, object> {{"Name", $"elements[{i}, {j}]"}};
-                    <td>
-                        @Html.TextBoxFor(modelItem => element, htmlAttributes)
-                    </td>
-                }
-            </tr>
-        }
+            @for (var i = 0; i < Model.Size; i++)
+            {
+                <tr>
+                    @for (var j = 0; j < Model.Size; j++)
+                    {
+                        <td>
+                            @Html.TextBox($"elements[{i}, {j}]", Model.Elements[i, j])
+                        </td>
+                    }
+                </tr>
+            }
         </tbody>
     </table>
     <input type="submit" value="Submit" class="btn btn-default" />
