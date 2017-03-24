@@ -21,6 +21,7 @@
 {
     <table class="table">
         <caption>Source matrix</caption>
+        @Html.HiddenFor(m => m.Size)
         <tbody>
             @for (var i = 0; i < Model.Size; i++)
             {
@@ -28,7 +29,7 @@
                     @for (var j = 0; j < Model.Size; j++)
                     {
                         <td>
-                            @Html.TextBox($"elements[{i}, {j}]", Model.Elements[i, j])
+                            @Html.TextBox($"Elements[{i}, {j}]", Model.Elements[i, j])
                         </td>
                     }
                 </tr>
@@ -48,7 +49,7 @@
                     @for (var j = 0; j < rotatedMatrix.Size; j++)
                     {
                         <td>
-                            @Html.TextBox($"rotatedelements[{i}, {j}]", rotatedMatrix.Elements[i, j])
+                            @Html.TextBox($"RotatedElements[{i}, {j}]", rotatedMatrix.Elements[i, j])
                         </td>
                     }
                 </tr>
