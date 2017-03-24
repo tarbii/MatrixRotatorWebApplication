@@ -10,11 +10,7 @@ namespace MatrixRotatorWebApplication.Models
 
         static BindingDeserializer()
         {
-            RegisterDeserializer(data =>
-            {
-                int i;
-                return int.TryParse(data, out i) ? i : (int?)null;
-            });
+            RegisterDeserializer(data => int.TryParse(data, out int i) ? i : (int?)null);
         }
 
         public static T Deserialize<T>(string data)
