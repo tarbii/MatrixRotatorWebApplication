@@ -1,7 +1,10 @@
-﻿@model MatrixRotatorWebApplication.Models.Matrix<int?>
+﻿@using MatrixRotatorWebApplication.Models
+
+@model MatrixRotatorWebApplication.Models.Matrix<int?>
 
 @{
     ViewData["Title"] = "Matrix";
+    var rotatedMatrix = ViewData["RotatedMatrix"] as Matrix<int?>;
 }
 
 <h2>Matrix</h2>
@@ -33,4 +36,24 @@
         </tbody>
     </table>
     <input type="submit" value="Rotate" class="btn btn-default" />
+}
+@if (rotatedMatrix != null)
+{
+    <table class="table">
+        <caption>Rotated matrix</caption>
+        <tbody>
+            @for (var i = 0; i < rotatedMatrix.Size; i++)
+            {
+                <tr>
+                    @for (var j = 0; j < rotatedMatrix.Size; j++)
+                    {
+                        <td>
+                            @Html.TextBox($"rotatedelements[{i}, {j}]", rotatedMatrix.Elements[i, j])
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
 }
