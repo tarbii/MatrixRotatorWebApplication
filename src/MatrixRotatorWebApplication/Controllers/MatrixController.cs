@@ -9,6 +9,7 @@ namespace MatrixRotatorWebApplication.Controllers
 {
     public class MatrixController : Controller
     {
+
         public IActionResult Index()
         {
             const int size = 5;
@@ -16,10 +17,18 @@ namespace MatrixRotatorWebApplication.Controllers
             return View(matrix);
         }
 
-        [HttpPost]
-        public IActionResult Index([ModelBinder(BinderType = typeof(MatrixBinder<int?>))] Matrix<int?> matrix)
+        public IActionResult ChangeSize(int size)
         {
-            return View(matrix);
+            var matrix = new Matrix<int?>(size) { Elements = new int?[size, size] };
+            return View("Index", matrix);
+        }
+
+        public IActionResult Rotate([ModelBinder(BinderType = typeof(MatrixBinder<int?>))] Matrix<int?> matrix)
+        {
+            var rotatedMatrix = new Matrix<int?>(matrix.Size) { Elements = matrix.Elements };
+            //var rotatedMatrix = matrix.Rotate();
+            ViewData["RotatedMatrix"] = rotatedMatrix;
+            return View("Index", matrix);
         }
 
     }

@@ -8,7 +8,7 @@
 }
 
 <h2>Matrix</h2>
-@using (Html.BeginForm())
+@using (Html.BeginForm("ChangeSize", "Matrix"))
 {
 
     @Html.LabelFor(m => m.Size)
@@ -17,11 +17,10 @@
     <input type="submit" value="Change size" class="btn btn-default" />
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Rotate", "Matrix", new { Model.Size }))
 {
     <table class="table">
         <caption>Source matrix</caption>
-        @Html.HiddenFor(m => m.Size)
         <tbody>
             @for (var i = 0; i < Model.Size; i++)
             {
