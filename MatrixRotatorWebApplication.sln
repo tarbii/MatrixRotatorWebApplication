@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatrixRotatorWebApplication
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatrixRotator", "MatrixRotator\MatrixRotator.csproj", "{6DF15AC7-11A7-48F5-8706-A8789B051804}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatrixRotator.Tests", "MatrixRotator.Tests\MatrixRotator.Tests.csproj", "{1B8B6D66-184C-4520-9C53-AEE6E5561058}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{6DF15AC7-11A7-48F5-8706-A8789B051804}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DF15AC7-11A7-48F5-8706-A8789B051804}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DF15AC7-11A7-48F5-8706-A8789B051804}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B8B6D66-184C-4520-9C53-AEE6E5561058}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B8B6D66-184C-4520-9C53-AEE6E5561058}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B8B6D66-184C-4520-9C53-AEE6E5561058}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B8B6D66-184C-4520-9C53-AEE6E5561058}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
