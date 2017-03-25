@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using CsvHelper;
 using MatrixRotator;
 using MatrixRotatorWebApplication.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MatrixRotatorWebApplication.Controllers
@@ -34,6 +35,31 @@ namespace MatrixRotatorWebApplication.Controllers
             rotatedElements.RotateMatrix();
             var rotatedMatrix = new Matrix<string>(matrix.Size) { Elements = rotatedElements };
             ViewData["RotatedMatrix"] = rotatedMatrix;
+            return View("Index", matrix);
+        }
+
+        public IActionResult UploadMatrix(IFormFile file)
+        {
+            var elementsList = new List<string[]>();
+            using (var textReader = new StreamReader(file.OpenReadStream()))
+            {
+                var csv = new CsvReader(textReader);
+                csv.Configuration.HasHeaderRecord = false;
+                while (csv.Read())
+                {
+                    elementsList.Add(csv.CurrentRecord);
+                }
+            }
+            var size = elementsList.Count;
+            var elements = new string[size, size];
+            for (var i = 0; i < size; i++)
+            {
+                for (var j = 0; j < size; j++)
+                {
+                    elements[i, j] = elementsList[i][j];
+                }
+            }
+            var matrix = new Matrix<string>(size) { Elements = elements };
             return View("Index", matrix);
         }
 
