@@ -7,8 +7,7 @@ namespace MatrixRotatorWebApplication.Models
     {
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
-            int size;
-            if (!int.TryParse(bindingContext.ValueProvider.GetValue("Size").FirstValue, out size))
+            if (!int.TryParse(bindingContext.ValueProvider.GetValue("Size").FirstValue, out var size))
                 return Task.CompletedTask;
             var elements = new T[size, size];
             for (var i = 0; i < size; i++)
