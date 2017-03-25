@@ -16,11 +16,9 @@ namespace MatrixRotator
                 {
                     var a = matrix[j, n - i - 1];
                     matrix[j, n - i - 1] = matrix[i, j];
-                    var b = matrix[n - i - 1, n - j - 1];
+                    matrix[i, j] = matrix[n - j - 1, i];
+                    matrix[n - j - 1, i] = matrix[n - i - 1, n - j - 1];
                     matrix[n - i - 1, n - j - 1] = a;
-                    a = matrix[n - j - 1, i];
-                    matrix[n - j - 1, i] = b;
-                    matrix[i, j] = a;
                 }
             }
         }
