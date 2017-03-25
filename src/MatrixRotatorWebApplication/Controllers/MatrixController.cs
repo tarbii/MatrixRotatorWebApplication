@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
+using MatrixRotator;
 using MatrixRotatorWebApplication.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,8 +27,10 @@ namespace MatrixRotatorWebApplication.Controllers
 
         public IActionResult Rotate([ModelBinder(BinderType = typeof(MatrixBinder<int?>))] Matrix<int?> matrix)
         {
-            var rotatedMatrix = new Matrix<int?>(matrix.Size) { Elements = matrix.Elements };
-            //var rotatedMatrix = matrix.Rotate();
+            var rotatedElements = new int?[matrix.Size, matrix.Size];
+            Array.Copy(matrix.Elements, rotatedElements, matrix.Elements.Length);
+            rotatedElements.RotateMatrix();
+            var rotatedMatrix = new Matrix<int?>(matrix.Size) { Elements = rotatedElements };
             ViewData["RotatedMatrix"] = rotatedMatrix;
             return View("Index", matrix);
         }
