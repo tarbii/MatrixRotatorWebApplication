@@ -63,5 +63,29 @@ namespace MatrixRotatorWebApplication.Controllers
             return View("Index", matrix);
         }
 
+        public FileResult Download(
+            [ModelBinder(BinderType = typeof(MatrixBinder<string>))] Matrix<string> rotatedMatrix)
+        {
+            using (var ms = new MemoryStream())
+            {
+                using (var tw = new StreamWriter(ms))
+                {
+                    using (var csvWrite = new CsvWriter(tw))
+                    {
+                        for (var i = 0; i < rotatedMatrix.Size; i++)
+                        {
+                            for (var j = 0; j < rotatedMatrix.Size; j++)
+                            {
+                                csvWrite.WriteField(rotatedMatrix.Elements[i, j]);
+                            }
+                            csvWrite.NextRecord();
+                        }
+                    }
+                }
+                var fileName = $"RotatedMatrix.csv";
+                return File(ms.ToArray(), "application/octet-stream", fileName);
+            }
+        }
+
     }
 }
