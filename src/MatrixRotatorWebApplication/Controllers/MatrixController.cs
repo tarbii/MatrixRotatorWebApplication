@@ -15,11 +15,11 @@ namespace MatrixRotatorWebApplication.Controllers
     public class MatrixController : Controller
     {
 
+        private readonly Matrix<string> _defaultMatrix = new Matrix<string>(5) { Elements = new string[5, 5] };
+
         public IActionResult Index()
         {
-            const int size = 5;
-            var matrix = new Matrix<string>(size) { Elements = new string[size, size] };
-            return View(matrix);
+            return View(_defaultMatrix);
         }
 
         public IActionResult ChangeSize(int size)
@@ -40,27 +40,36 @@ namespace MatrixRotatorWebApplication.Controllers
 
         public IActionResult UploadMatrix(IFormFile file)
         {
-            var elementsList = new List<string[]>();
-            using (var textReader = new StreamReader(file.OpenReadStream()))
+            try
             {
-                var csv = new CsvReader(textReader);
-                csv.Configuration.HasHeaderRecord = false;
-                while (csv.Read())
+                var elementsList = new List<string[]>();
+                using (var textReader = new StreamReader(file.OpenReadStream()))
                 {
-                    elementsList.Add(csv.CurrentRecord);
+                    var csv = new CsvReader(textReader);
+                    csv.Configuration.HasHeaderRecord = false;
+                    while (csv.Read())
+                    {
+                        elementsList.Add(csv.CurrentRecord);
+                    }
                 }
+                var size = elementsList.Count;
+                var elements = new string[size, size];
+                for (var i = 0; i < size; i++)
+                {
+                    for (var j = 0; j < size; j++)
+                    {
+                        elements[i, j] = elementsList[i][j];
+                    }
+                }
+                var matrix = new Matrix<string>(size) { Elements = elements };
+                return View("Index", matrix);
             }
-            var size = elementsList.Count;
-            var elements = new string[size, size];
-            for (var i = 0; i < size; i++)
+            catch (Exception)
             {
-                for (var j = 0; j < size; j++)
-                {
-                    elements[i, j] = elementsList[i][j];
-                }
+                ViewData["WrongFileMessage"] =
+                    "Invalid file. Please use .csv file with \",\" delimiter containing square matrix.";
+                return View("Index", _defaultMatrix);
             }
-            var matrix = new Matrix<string>(size) { Elements = elements };
-            return View("Index", matrix);
         }
 
         public FileResult Download(

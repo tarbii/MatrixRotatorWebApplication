@@ -5,6 +5,7 @@
 @{
     ViewData["Title"] = "Matrix";
     var rotatedMatrix = ViewData["RotatedMatrix"] as Matrix<string>;
+    var wrongFileMessage = ViewData["WrongFileMessage"] as string;
 }
 
 <h2>Matrix</h2>
@@ -14,6 +15,7 @@
     @Html.TextBox("file", null, new { type = "file", accept = ".csv", @class = "btn btn-default" })
     <input type="submit" value="Upload" class="btn btn-default" />
 }
+@Html.Label(wrongFileMessage, wrongFileMessage, new { style = "color: red" })
 <br />
 @using (Html.BeginForm("ChangeSize", "Matrix"))
 {
