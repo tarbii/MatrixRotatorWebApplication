@@ -8,6 +8,13 @@
 }
 
 <h2>Matrix</h2>
+@using (Html.BeginForm("UploadMatrix", "Matrix", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <caption>Upload csv file with square matrix:</caption>
+    @Html.TextBox("file", null, new { type = "file", accept = ".csv", @class = "btn btn-default" })
+    <input type="submit" value="Upload" class="btn btn-default" />
+}
+<br />
 @using (Html.BeginForm("ChangeSize", "Matrix"))
 {
 
@@ -16,20 +23,6 @@
     @Html.TextBoxFor(m => m.Size)
     <input type="submit" value="Change size" class="btn btn-default" />
 }
-
-<form method="post" enctype="multipart/form-data" asp-controller="Matrix" asp-action="UploadMatrix">
-    <div class="form-group">
-        <div class="col-md-10">
-            <p>Upload one or more files using this form:</p>
-            <input type="file" name="file" accept=".csv" />
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-10">
-            <input type="submit" value="Upload" />
-        </div>
-    </div>
-</form>
 
 @using (Html.BeginForm("Rotate", "Matrix", new { Model.Size }))
 {
@@ -51,23 +44,27 @@
     </table>
     <input type="submit" value="Rotate" class="btn btn-default" />
 }
+
 @if (rotatedMatrix != null)
 {
-    <table class="table">
-        <caption>Rotated matrix</caption>
-        <tbody>
-            @for (var i = 0; i < rotatedMatrix.Size; i++)
-            {
-                <tr>
-                    @for (var j = 0; j < rotatedMatrix.Size; j++)
-                    {
-                        <td>
-                            @Html.TextBox($"RotatedElements[{i}, {j}]", rotatedMatrix.Elements[i, j])
-                        </td>
-                    }
-                </tr>
-            }
-        </tbody>
-    </table>
-
+    using (Html.BeginForm("Download", "Matrix", new { rotatedMatrix.Size }))
+    {
+        <table class="table">
+            <caption>Rotated matrix</caption>
+            <tbody>
+                @for (var i = 0; i < rotatedMatrix.Size; i++)
+                {
+                    <tr>
+                        @for (var j = 0; j < rotatedMatrix.Size; j++)
+                        {
+                            <td>
+                                @Html.TextBox($"Elements[{i}, {j}]", rotatedMatrix.Elements[i, j])
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <input type="submit" value="Download" class="btn btn-default" />
+    }
 }
